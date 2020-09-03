@@ -1,13 +1,27 @@
 const defaultResult = 0;
 let currentResult = defaultResult;
+let logEntries = [];
 
+// Gets input from input field.
 function getUserInput() {
   return parseInt(userInput.value);
 }
 
+// Generates and writes calculation log
 function writeOutput(operator, resultBefore, calcNum) {
   const calcDesc = `${resultBefore} ${operator} ${calcNum}`;
-  outputResult(currentResult, calcDesc);
+  outputResult(currentResult, calcDesc); // from vendor file
+}
+
+function writeToLog(operationID, prevResult, operationNum, newResult) {
+  const logEntry = {
+    operation: operationID,
+    prevResult: prevResult,
+    number: operationNum,
+    result: newResult,
+  };
+  logEntries.push(logEntry);
+  console.log(logEntries);
 }
 
 function add() {
@@ -15,6 +29,7 @@ function add() {
   const initResult = currentResult;
   currentResult += userNum;
   writeOutput('+', initResult, userNum);
+  writeToLog('ADD', initResult, userNum, currentResult);
 }
 
 function sub() {
@@ -22,6 +37,7 @@ function sub() {
   const initResult = currentResult;
   currentResult -= userNum;
   writeOutput('-', initResult, userNum);
+  writeToLog('SUBTRACT', initResult, userNum, currentResult);
 }
 
 function multi() {
@@ -29,6 +45,7 @@ function multi() {
   const initResult = currentResult;
   currentResult *= userNum;
   writeOutput('*', initResult, userNum);
+  writeToLog('MULTIPLY', initResult, userNum, currentResult);
 }
 
 function div() {
@@ -36,6 +53,7 @@ function div() {
   const initResult = currentResult;
   currentResult /= userNum;
   writeOutput('/', initResult, userNum);
+  writeToLog('DIVIDE', initResult, userNum, currentResult);
 }
 
 addBtn.addEventListener('click', add);
