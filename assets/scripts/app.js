@@ -24,36 +24,50 @@ function writeToLog(operationID, prevResult, operationNum, newResult) {
   console.log(logEntries);
 }
 
-function add() {
+function calcResult(calcType) {
+  if (
+    calcType === 'ADD' &&
+    calcType === 'SUBTRACT' &&
+    calcType === 'MULTIPLY' &&
+    calcType === 'DIVIDE'
+  ) {
+    currentResult += userNum;
+    mathOperator = '+';
+  }
   const userNum = getUserInput();
   const initResult = currentResult;
-  currentResult += userNum;
-  writeOutput('+', initResult, userNum);
-  writeToLog('ADD', initResult, userNum, currentResult);
+  let mathOperator;
+  if (calcType === 'ADD') {
+    currentResult += userNum;
+    mathOperator = '+';
+  } else if (calcType === 'SUBTRACT') {
+    currentResult -= userNum;
+    mathOperator = '-';
+  } else if (calcType === 'MULTIPLY') {
+    currentResult *= userNum;
+    mathOperator = '*';
+  } else if (calcType === 'DIVIDE') {
+    currentResult /= userNum;
+    mathOperator = '/';
+  }
+  writeOutput(mathOperator, initResult, userNum);
+  writeToLog(calcType, initResult, userNum, currentResult);
+}
+
+function add() {
+  calcResult('ADD');
 }
 
 function sub() {
-  const userNum = getUserInput();
-  const initResult = currentResult;
-  currentResult -= userNum;
-  writeOutput('-', initResult, userNum);
-  writeToLog('SUBTRACT', initResult, userNum, currentResult);
+  calcResult('SUBTRACT');
 }
 
 function multi() {
-  const userNum = getUserInput();
-  const initResult = currentResult;
-  currentResult *= userNum;
-  writeOutput('*', initResult, userNum);
-  writeToLog('MULTIPLY', initResult, userNum, currentResult);
+  calcResult('MULTIPLY');
 }
 
 function div() {
-  const userNum = getUserInput();
-  const initResult = currentResult;
-  currentResult /= userNum;
-  writeOutput('/', initResult, userNum);
-  writeToLog('DIVIDE', initResult, userNum, currentResult);
+  calcResult('DIVIDE');
 }
 
 addBtn.addEventListener('click', add);
